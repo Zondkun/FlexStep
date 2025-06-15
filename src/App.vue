@@ -53,7 +53,7 @@ const onChangeInputValue = event => {
   filters.searchQuery = event.target.value
 }
 
-function debounced(fn, delay) {
+function debounced(fn, delay) { // избыточные ...args передаются в fn (в loadSneakers не используется)
   let timeoutId;
 
   return function (...args) {
