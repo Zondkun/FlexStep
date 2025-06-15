@@ -56,7 +56,7 @@ const onChangeInputValue = event => {
 function debounced(fn, delay) { // аргументы вызова обёрнутой функции; передаются в fn, в loadSneakers не используются
   let timeoutId;
 
-  return function (...args) {
+  return function (...args) { // Могут не передаваться, но тогда не использовать в fn
     clearTimeout(timeoutId)
     timeoutId = setTimeout(() => fn(...args), delay)
   }
