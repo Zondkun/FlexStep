@@ -53,6 +53,15 @@ const onChangeInputValue = event => {
   filters.searchQuery = event.target.value
 }
 
+function debounced(fn, delay) {
+  let timeoutId;
+
+  return function (...args) {
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => fn(...args), delay)
+  }
+}
+
 function loadSneakers() {
   fetch(`https://afa71d2f9b6cbbe6.mokky.dev/items?limit=12&sortBy=${filters.sortBy}&title=*${filters.searchQuery}*`)
     .then(response => {
@@ -71,7 +80,7 @@ function loadSneakers() {
 
 onMounted(loadSneakers)
 
-watch(filters,() => {
-  loadSneakers()
-})
+const debounceLoad = debounced(loadSneakers, 500)
+watch(() => filters.sortBy, loadSneakers)// попадает newVal, oldVal
+watch(() => filters.searchQuery, debounceLoad) // попадает newVal, oldVal -> передается как ...args в loadSneakers
 </script>
