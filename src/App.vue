@@ -19,6 +19,7 @@
               class="border border-gray-400 rounded-md py-2 pl-10 pr-4 outline-none focus:border-gray-500"
               type="text"
               placeholder="Поиск..."
+              @input="onChangeInputValue"
             />
           </div>
         </div>
@@ -48,8 +49,12 @@ const onChangeValue = event => {
   filters.sortBy = event.target.value
 }
 
+const onChangeInputValue = event => {
+  filters.searchQuery = event.target.value
+}
+
 function loadSneakers() {
-  fetch(`https://afa71d2f9b6cbbe6.mokky.dev/items?limit=12&sortBy=${filters.sortBy}`)
+  fetch(`https://afa71d2f9b6cbbe6.mokky.dev/items?limit=12&sortBy=${filters.sortBy}&title=*${filters.searchQuery}*`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Ошибка: ${response.status}`);
@@ -66,7 +71,7 @@ function loadSneakers() {
 
 onMounted(loadSneakers)
 
-watch(() => filters.sortBy,() => {
+watch(filters,() => {
   loadSneakers()
 })
 </script>
