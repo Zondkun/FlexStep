@@ -2,7 +2,7 @@
   <div class=" flex flex-col justify-between relative border border-slate-200 rounded-2xl p-8 cursor-pointer transition duration-300 hover:shadow-xl">
     <div>
       <img @click="onClickFavorite" :src="!isFavorite ? '/like-1.svg' : '/like-2.svg' " alt="лайкнуто" class="absolute top-5 left-5 w-10">
-      <img :src="props.imageUrl" alt="Кроссовки" class="" />
+      <img :src="props.imageUrl" alt="Кроссовки" class="w-66.5 h-56" />
       <p class="mt-1">{{ props.title }}</p>
     </div>
 
@@ -17,7 +17,9 @@
 </template>
 
 <script setup>
+
 const props = defineProps({
+  id: Number,
   imageUrl: String,
   title: String,
   price: Number,
@@ -26,4 +28,5 @@ const props = defineProps({
   onClickAdd: Function,
   onClickFavorite: Function,
 })
+
 </script>
