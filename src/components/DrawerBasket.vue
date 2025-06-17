@@ -7,7 +7,7 @@
   <div
     class="fixed top-0 right-0 w-96 h-full bg-white z-1 p-8 overflow-auto flex flex-col justify-between"
   >
-    <div>
+    <div :class="totalPrice ? '' : 'h-full'">
       <div class="flex items-center gap-3">
         <svg
           @click="() => emit('closeDrawer')"
@@ -35,15 +35,24 @@
         </svg>
         <h2 class="text-2xl font-bold">Корзина</h2>
       </div>
-      <cart-item-list />
+
+      <div v-auto-animate ref="listContainer" :class="!totalPrice ? 'flex h-full items-center' : ''">
+        <info-block
+          v-if="!totalPrice"
+          title="Корзина пустая"
+          description="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+          image-url="/package-icon.png"
+        />
+        <cart-item-list v-else />
+      </div>
     </div>
-    <div class="flex flex-col gap-4">
+
+    <div class="flex flex-col gap-4" v-if="totalPrice">
       <div class="flex gap-1">
         <span>Итого:</span>
         <div class="border-b border-dashed flex-1"></div>
         <b>{{ props.totalPrice }} руб.</b>
       </div>
-
       <div class="flex gap-1">
         <span>Налог 5%:</span>
         <div class="border-b border-dashed flex-1"></div>
@@ -54,18 +63,26 @@
         :disabled="!props.totalPrice"
         class="bg-lime-500 rounded-2xl mt-3 w-full py-2 text-white hover:bg-lime-700 transition cursor-pointer disabled:bg-slate-400 disabled:cursor-default"
       >
-        {{props.isCreatingOrder ? 'Заказ оформляется' : 'Оформить заказ'}}
+        {{ props.isCreatingOrder ? 'Заказ оформляется...' : 'Оформить заказ' }}
       </button>
     </div>
   </div>
 </template>
 
+
 <script setup>
+import { ref } from 'vue'
+
 import CartItemList from './CartItemList.vue'
+import InfoBlock from '@/components/InfoBlock.vue'
+
 const props = defineProps({
   totalPrice: Number,
   vatPrice: Number,
   isCreatingOrder: Boolean,
 })
 const emit = defineEmits(['closeDrawer', 'createOrder'])
+
+const listContainer = ref(null)
 </script>
+

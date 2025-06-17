@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-4 gap-6">
+  <div class="grid grid-cols-4 gap-6" v-auto-animate>
     <sneakers-card v-for="item in props.items" :key="item.id"
       :id="item.id"
       :price="item.price"
