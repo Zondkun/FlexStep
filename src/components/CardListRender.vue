@@ -6,7 +6,8 @@
       :title="item.title"
       :image-url="item.imageUrl"
       :is-favorite="item.isFavorite"
-      :is-added="false"
+      :is-added="item.isAdded"
+      :on-click-add="() => emit('addToDrawerCarts', item)"
       :on-click-favorite="() => emit('addToFavorite', item)"
     >
     </sneakers-card>
@@ -20,5 +21,5 @@ const props = defineProps({
   items: Array,
 })
 
-const emit = defineEmits(["addToFavorite"]);
+const emit = defineEmits(["addToFavorite", "addToDrawerCarts"]);
 </script>

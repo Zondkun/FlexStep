@@ -9,9 +9,9 @@
       </div>
 
       <ul class="flex items-center gap-6">
-        <li class="flex items-center gap-2 text-gray-500 hover:text-black cursor-pointer">
+        <li @click="() => emit('openDrawer')" class="flex items-center gap-2 text-gray-500 hover:text-black cursor-pointer">
           <img src="/cart.svg" alt="Иконка корзины" class="w-5">
-          <b>{{ props.basketCost }} руб.</b>
+          <b>{{ props.totalPrice }} руб.</b>
         </li>
         <li class="flex items-center gap-2 text-gray-500 hover:text-black cursor-pointer">
           <img src="/heart.svg" alt="Закладки" class="w-5 h-5">
@@ -26,11 +26,8 @@
 </template>
 
 <script setup>
-
-  const props = defineProps({
-    basketCost: {
-      type: Number,
-    }
-  })
-
+const emit = defineEmits(['openDrawer', 'closeDrawer']);
+const props = defineProps({
+  totalPrice: Number,
+})
 </script>
